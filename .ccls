@@ -1,0 +1,7 @@
+clang
+%c -std=c++11
+%cpp -std=c++2a
+%h %hpp cxx-headers
+--include=/usr/local/lib/clang/10.0.0/include/stddef.h
+-I/usr/local/lib/clang/10.0.0/include/
+

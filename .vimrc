@@ -68,17 +68,22 @@ set t_Co=256
 set termguicolors
 "colorscheme wombat256mod
 "colorscheme kuroi
-colorscheme gruvbox
+"colorscheme gruvbox
+" 适合亮度高
+colorscheme kuroi
 "colo gotham256
 
 "let g:two_firewatch_italics=1
 "colo two-firewatch
 "let g:airline_theme='twofirewatch' " 
-
 set makeprg=g++\ -Wall\ -g\ %\ -o\ %<
 let g:asyncrun_open = 8
-autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address -fsanitize=bounds -fsanitize=unsigned-integer-overflow -fsanitize=signed-integer-overflow -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address -fsanitize=bounds -fsanitize=unsigned-integer-overflow -fsanitize=signed-integer-overflow -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && for d in *.in ; do ./'.shellescape('%:r').' < $d ; done'<CR>
+autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=bounds -fsanitize=unsigned-integer-overflow -fsanitize=signed-integer-overflow -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+"-fsanitize=address 
 autocmd filetype cpp nnoremap <F5> :w <bar> exec '!'<CR>
+let var='/int main/,$d'
+autocmd filetype cpp nnoremap <F6> :w <bar> exec '!sed '.shellescape(var).' '.shellescape('%').' > /tmp/tmp.cpp && leetcode submit /tmp/tmp.cpp'<CR>
 autocmd filetype tex nnoremap <F4> :w <bar> exec '!latexmk'<CR>
 "autocmd filetype tex nnoremap <F4> :w <bar> exec '!pdflatex '.shellescape('%')<CR>
 "autocmd filetype tex nnoremap <F5> :w <bar> exec '!evince ./'.shellescape('%:r.dvi').'> /dev/null 2>&1 &'<CR>
