@@ -125,15 +125,9 @@ else
         export PATH="/home/switch/miniconda3/bin:$PATH"
     fi
 fi
-export PATH=/opt/cuda/bin:/home/switch/.bin:$PATH
-export CPLUS_INCLUDE_PATH=/usr/include/boost_1_74:$CPLUS_INCLUDE_PATH
-export LIBRARY_PATH=/usr/lib/boost_1_74:$LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/lib/boost_1_74:/opt/cuda/lib64:$LD_LIBRARY_PATH:/home/switch/reference/3rdParty/partio/build/Linux-4.19.141-x86_64-optimize/src/lib
-
 unset __conda_setup
 # <<< conda initialize <<<
 export TI_ENABLE_OPENGL=0
-alias catkin_make="catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3"
 alias you-dl="proxychains  youtube-dl --write-auto-sub --sub-format srt -f 'best[height<=?1080]'"
 #alias you-dl="proxychains  youtube-dl --write-auto-sub --sub-format srt -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 alias translate="proxychains /home/switch/.script/translate.sh"
@@ -141,9 +135,11 @@ alias emacsc="LC_CTYPE=zh_CN.UTF-8 emacs &"
 alias p="/home/switch/miniconda3/bin/python"
 alias v="vim"
 alias gitln="export GITBSLR_DEBUG=1 && LD_PRELOAD=/home/switch/.bin/gitbslr.so proxychains /home/switch/.bin/git"
-alias repdf="p /home/switch/Downloads/pdfrename.py"
+alias repdf="p /home/switch/Downloads/.pdfrename.py"
 alias fsync="rsync -avhzrP"
 alias savepower="sh ~/.tune.sh"
+alias leetcode="/home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode"
+alias lc_g="/home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode show -g"
 #source /usr/share/nvm/init-nvm.sh
 export TAICHI_NUM_THREADS=8
 #export TAICHI_REPO_DIR=/home/switch/reference/taichi

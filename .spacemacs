@@ -33,7 +33,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(vimscript
+   '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -41,7 +41,6 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      auto-completion
      ;; better-defaults
-     emacs-lisp
      c-c++
      themes-megapack
      ;; git
@@ -199,7 +198,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark-high-contrast
+   dotspacemacs-themes '(
+   ;;solarized-dark-high-contrast
                          tangotango
                          zen-and-art
                          underwater
@@ -594,3 +594,8 @@ This function is called at the very end of Spacemacs initialization."
   (interactive)
   (compile (format "cd ../build && make")))
 (global-set-key (kbd "<f8>") 'c++-build-project)
+(defun leetcode-submit ()
+  (interactive)
+  (let ((current-file (buffer-name (current-buffer))))
+    (async-shell-command (format "sed '/int main/,$d' %s > /tmp/tmp.cpp && leetcode submit /tmp/tmp.cpp" (buffer-file-name) ))))
+(global-set-key (kbd "<f3>") 'leetcode-submit)

@@ -78,8 +78,8 @@ colorscheme kuroi
 "let g:airline_theme='twofirewatch' " 
 set makeprg=g++\ -Wall\ -g\ %\ -o\ %<
 let g:asyncrun_open = 8
-autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address -fsanitize=bounds -fsanitize=unsigned-integer-overflow -fsanitize=signed-integer-overflow -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && for d in *.in ; do ./'.shellescape('%:r').' < $d ; done'<CR>
-autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=bounds -fsanitize=unsigned-integer-overflow -fsanitize=signed-integer-overflow -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address,bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && for d in *.in ; do ./'.shellescape('%:r').' < $d ; done'<CR>
+autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 "-fsanitize=address 
 autocmd filetype cpp nnoremap <F5> :w <bar> exec '!'<CR>
 let var='/int main/,$d'
