@@ -199,7 +199,11 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-   ;;solarized-dark-high-contrast
+                         ;;solarized-dark-high-contrast
+                         madhat2r
+                         eziam-dusk
+                         doom-dark+
+                         django
                          tangotango
                          zen-and-art
                          underwater
@@ -223,7 +227,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("Lucida MAC"
-                               :size 14.0
+                               :size 12.0
                                :weight normal
                                :width normal)
 

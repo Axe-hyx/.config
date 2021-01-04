@@ -140,6 +140,7 @@ alias fsync="rsync -avhzrP"
 alias savepower="sh ~/.tune.sh"
 alias leetcode="/home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode"
 alias lc_g="/home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode show -g"
+alias shaderc="/home/switch/reference/API/bgfx/tools/bin/linux/shaderc"
 #source /usr/share/nvm/init-nvm.sh
 export TAICHI_NUM_THREADS=8
 #export TAICHI_REPO_DIR=/home/switch/reference/taichi
