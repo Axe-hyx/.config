@@ -57,7 +57,6 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      treemacs
-     undo-tree
      ;; version-control
      )
 
@@ -72,6 +71,7 @@ This function should only modify configuration layer settings."
                                       lsp-ui
                                       ccls
                                       company-lsp
+                                      undo-tree
                                       smart-compile
                                       )
 
@@ -227,7 +227,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("Lucida MAC"
-                               :size 12.0
+                               :size 14.0
                                :weight normal
                                :width normal)
 
@@ -259,6 +259,7 @@ It should only modify the values of Spacemacs settings."
    ;; and TAB or `C-m' and `RET'.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
+   ;; [User]: for use of ctrl-i
    dotspacemacs-distinguish-gui-tab t
 
    ;; Name of the default layout (default "Default")
@@ -535,7 +536,7 @@ This function is called at the very end of Spacemacs initialization."
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
  '(package-selected-packages
-   '(smart-compile helm-fuzzy js2-refactor yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-cscope xcscope cython-mode company-anaconda blacken anaconda-mode pythonic web-beautify tide typescript-mode tern prettier-js nodejs-repl livid-mode skewer-mode multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path opencl-mode glsl-mode cuda-mode company-glsl dap-mode bui tree-mode smartparens seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake popwin minitest helm-gtags ggtags evil-matchit enh-ruby-mode counsel-gtags counsel swiper ivy chruby bundler inf-ruby chocolate-theme yasnippet-snippets which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep lsp-ui lsp-treemacs helm-xref helm-themes helm-swoop helm-rtags helm-projectile helm-mode-manager helm-make helm-lsp helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-c-style fuzzy flycheck-package evil-mc elisp-slime-nav dotenv-mode disaster diminish cquery cpp-auto-include company-statistics company-rtags company-lsp company-c-headers clang-format ccls bind-map auto-yasnippet auto-compile ace-jump-helm-line ac-ispell))
+   '(undo-tree smart-compile helm-fuzzy js2-refactor yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-cscope xcscope cython-mode company-anaconda blacken anaconda-mode pythonic web-beautify tide typescript-mode tern prettier-js nodejs-repl livid-mode skewer-mode multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path opencl-mode glsl-mode cuda-mode company-glsl dap-mode bui tree-mode smartparens seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake popwin minitest helm-gtags ggtags evil-matchit enh-ruby-mode counsel-gtags counsel swiper ivy chruby bundler inf-ruby chocolate-theme yasnippet-snippets which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep lsp-ui lsp-treemacs helm-xref helm-themes helm-swoop helm-rtags helm-projectile helm-mode-manager helm-make helm-lsp helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-c-style fuzzy flycheck-package evil-mc elisp-slime-nav dotenv-mode disaster diminish cquery cpp-auto-include company-statistics company-rtags company-lsp company-c-headers clang-format ccls bind-map auto-yasnippet auto-compile ace-jump-helm-line ac-ispell))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(standard-indent 4)
  '(vc-annotate-background "#201D0E")
@@ -589,17 +590,26 @@ This function is called at the very end of Spacemacs initialization."
 
 ;; build function
 (require 'smart-compile nil t)
-(global-set-key (kbd "<f4>") 'smart-compile)
-(defun c++-single-build()
-  (interactive)
-  (compile (format "g++ %s && ./a.out" (buffer-file-name))))
-(global-set-key (kbd "<f7>") 'c++-single-build)
+(global-set-key (kbd "<f7>") 'smart-compile)
 (defun c++-build-project()
   (interactive)
   (compile (format "cd ../build && make")))
 (global-set-key (kbd "<f8>") 'c++-build-project)
+
 (defun leetcode-submit ()
   (interactive)
   (let ((current-file (buffer-name (current-buffer))))
-    (async-shell-command (format "sed '/int main/,$d' %s > /tmp/tmp.cpp && leetcode submit /tmp/tmp.cpp" (buffer-file-name) ))))
+    (async-shell-command (format "sed '/int main/,$d' %s > /tmp/tmp.cpp && /bin/proxychains -q /home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode submit /tmp/tmp.cpp" (buffer-file-name) ))))
 (global-set-key (kbd "<f3>") 'leetcode-submit)
+(defun c++-single-build()
+  (interactive)
+  (compile (format "clang++ -g -DDEBUG -std=c++11 -fsanitize=address,bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer %s &&time ./a.out" (buffer-file-name))))
+(global-set-key (kbd "<f4>") 'c++-single-build)
+(defun git-add ()
+  (interactive)
+    (async-shell-command (format "git add %s" (buffer-file-name) )))
+(global-set-key (kbd "<f12>") 'git-add)
+;; delete shell newline: https://emacs.stackexchange.com/questions/21901/why-is-there-a-newline-in-the-result-of-shell-command-to-string
+;; init.el config
+;;(global-undo-tree-mode)
+;;(evil-set-undo-system 'undo-tree)

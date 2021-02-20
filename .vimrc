@@ -78,18 +78,19 @@ colorscheme kuroi
 "let g:airline_theme='twofirewatch' " 
 set makeprg=g++\ -Wall\ -g\ %\ -o\ %<
 let g:asyncrun_open = 8
-autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address,bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' && for d in *.in ; do ./a.out < $d ; done'<CR>
 "autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address,bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && for d in *.in ; do ./'.shellescape('%:r').' < $d ; done'<CR>
-autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' && ./a.out'<CR>
 "autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 "-fsanitize=address 
-autocmd filetype cpp nnoremap <F5> :w <bar> exec '!'<CR>
 let var='/int main/,$d'
-autocmd filetype cpp nnoremap <F6> :w <bar> exec '!sed '.shellescape(var).' '.shellescape('%').' > /tmp/tmp.cpp && leetcode submit /tmp/tmp.cpp'<CR>
-autocmd filetype tex nnoremap <F4> :w <bar> exec '!latexmk'<CR>
+let leetcode='/home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode'
+autocmd filetype cpp nnoremap <F2> :w <bar> exec '!clang++ -O1 -g -std=c++11 -fsanitize=address,bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' && for d in *.in ; do ./a.out < $d ; done'<CR>
+autocmd filetype cpp nnoremap <F3> :w <bar> exec '!sed '.shellescape(var).' '.shellescape('%').' > /tmp/tmp.cpp && proxychains -q '.shellescape(leetcode).' submit /tmp/tmp.cpp'<CR>
+autocmd filetype cpp nnoremap <F4> :w <bar> exec '!clang++ -O0 -g -std=c++11 -fsanitize=bounds,unsigned-integer-overflow,signed-integer-overflow,undefined -fno-omit-frame-pointer '.shellescape('%').' && ./a.out'<CR>
+autocmd filetype cpp nnoremap <F5> :w <bar> exec '!'<CR>
 "autocmd filetype tex nnoremap <F4> :w <bar> exec '!pdflatex '.shellescape('%')<CR>
 "autocmd filetype tex nnoremap <F5> :w <bar> exec '!evince ./'.shellescape('%:r.dvi').'> /dev/null 2>&1 &'<CR>
 "autocmd filetype tex nnoremap <F5> :w <bar> exec '!evince ./'.shellescape('%:r.pdf').'> /dev/null 2>&1 &'<CR>
+autocmd filetype tex nnoremap <F4> :w <bar> exec '!latexmk'<CR>
 autocmd filetype tex nnoremap <F5> :w <bar> exec '!evince ./out/'.shellescape('%:r.pdf').'> /dev/null 2>&1 &'<CR>
 autocmd filetype tex nnoremap <F6> :w <bar> exec '!texcount ./'.shellescape('%')<CR>
 autocmd filetype python nnoremap <F4> :w <bar> exec 'AsyncRun /home/switch/miniconda3/bin/python ./'.shellescape('%')<CR>
