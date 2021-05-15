@@ -1,0 +1,8 @@
+#!/bin/bash
+
+TODAY=`date +%j`                 # Today, as day-of-year (1-366)
+BIRTH=`date -d 31-Aug +%j`   # Christmas day, in same format
+VAR=$(expr $BIRTH - $TODAY) 
+echo "There are $VAR days until 答辩."
+echo $TODAY
+echo $BIRTH
