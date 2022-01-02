@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(python
+   '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -40,7 +40,10 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      ;; better-defaults
      auto-completion
-     c-c++
+     (c-c++ :variables 
+            c-c++-backend 'lsp-ccls
+            c-c++-lsp-executable "/usr/local/bin/ccls")
+     python
      git
      helm
      lsp
@@ -231,14 +234,16 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         ;;solarized-dark-high-contrast
+                         ;; solarized-dark-high-contrast
                          madhat2r
+                         ;; solarized-selenized-dark
+                         ;; solarized-selenized-white
                          eziam-dusk
                          doom-dark+
                          django
                          tangotango
                          zen-and-art
-                         underwater
+                         naquadah
                          )
    ;dotspacemacs-themes '(hemisu-dark
    ;                      spacemacs-dark
@@ -568,6 +573,8 @@ before packages are loaded."
 (global-unset-key (kbd "<C-k>"))
 (define-key global-map "\C-j" 'evil-jump-forward)
 (define-key global-map "\C-k" 'evil-jump-backward)
+(setq ccls-args '("--log-file=/tmp/ccls_emacst.log"))
+(setq ccls-initialization-options '(:index (:comments 2) :completion (:detailedLabel t)))
 )
 
 
@@ -575,13 +582,11 @@ before packages are loaded."
 ;; auto-generate custom variable definitions.
 (setq-default dotspacemacs-configuration-layers
  '((c-c++ :variables 
-                      c-c++-backend 'lsp-ccls ;or 'lsp-ccls
+                      c-c++-backend 'lsp-ccls
                       c-c++-lsp-executable "/usr/local/bin/ccls")
    (python :variables 
                       python-backend 'lsp
                       python-lsp-server 'pylsp)))
-(setq ccls-args '("--log-file=/tmp/ccls_emacst.log"))
-(setq ccls-initialization-options '(:index (:comments 2) :completion (:detailedLabel t)))
 (setq lsp-enable-snippet nil)
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -659,6 +664,7 @@ This function is called at the very end of Spacemacs initialization."
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 (setq-default dotspacemacs-configuration-layers '(
      (helm :variables helm-use-fuzzy 'source)))
 (setq-default indent-tabs-mode nil) ;; insert space
@@ -678,7 +684,7 @@ This function is called at the very end of Spacemacs initialization."
 (defun leetcode-submit ()
   (interactive)
   (let ((current-file (buffer-name (current-buffer))))
-    (async-shell-command (format "sed '/int main/,$d' %s > /tmp/tmp.cpp && /bin/proxychains -q /home/switch/.vscode-insiders/extensions/leetcode.vscode-leetcode-0.17.0/node_modules/vsc-leetcode-cli/bin/leetcode submit /tmp/tmp.cpp" (buffer-file-name) ))))
+    (async-shell-command (format "sed '/int main/,$d' %s > /tmp/tmp.cpp && /bin/proxychains -q node /home/switch/.bin/leetcode submit /tmp/tmp.cpp" (buffer-file-name) ))))
 (global-set-key (kbd "<f8>") 'leetcode-submit)
 
 (defun c++-oj-build()
@@ -698,3 +704,17 @@ This function is called at the very end of Spacemacs initialization."
 
 ;; delete shell newline: https://emacs.stackexchange.com/questions/21901/why-is-there-a-newline-in-the-result-of-shell-command-to-string
 ;; init.el config
+
+(defun alter|font()
+  (interactive)
+  (if (eq system-type 'gnu/linux)
+      (progn
+        ;; Setting English Font
+        ;; (set-face-attribute 'default nil :font "Lucida Mac 14")
+        (setq face-font-rescale-alist '(("STHeiti" . 1.2) ("STFangsong" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2)))
+        (set-face-attribute 'default nil :font "Monaco 14")
+        ;; Chinese Font
+        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font)
+                            charset
+                            (font-spec :family "WenQuanYi Micro Hei Mono" :size 26))))))
