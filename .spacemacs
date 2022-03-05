@@ -46,7 +46,10 @@ This function should only modify configuration layer settings."
      python
      git
      helm
-     lsp
+     (lsp :variables
+          lsp-lens-enable nil)
+     latex
+     ;; eglot
      themes-megapack
      treemacs
      ;; multiple-cursors
@@ -619,7 +622,7 @@ This function is called at the very end of Spacemacs initialization."
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
  '(package-selected-packages
-   '(apropospriate-theme modus-themes tao-theme posframe magit forge company window-purpose imenu-list sphinx-doc poetry nose lsp-pyright undo-tree smart-compile helm-fuzzy js2-refactor yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-cscope xcscope cython-mode company-anaconda blacken anaconda-mode pythonic web-beautify tide typescript-mode tern prettier-js nodejs-repl livid-mode skewer-mode multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path opencl-mode glsl-mode cuda-mode company-glsl dap-mode bui tree-mode smartparens seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake popwin minitest helm-gtags ggtags evil-matchit enh-ruby-mode counsel-gtags counsel swiper ivy chruby bundler inf-ruby chocolate-theme yasnippet-snippets which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep lsp-ui lsp-treemacs helm-xref helm-themes helm-swoop helm-rtags helm-projectile helm-mode-manager helm-make helm-lsp helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-c-style fuzzy flycheck-package evil-mc elisp-slime-nav dotenv-mode disaster diminish cquery cpp-auto-include company-statistics company-rtags company-lsp company-c-headers clang-format ccls auto-yasnippet auto-compile ace-jump-helm-line ac-ispell))
+   '(kaolin-themes git-link git-commit ghub doom-themes cfrs magit-section projectile subatomic-theme helm-ls-git treemacs monokai-theme markdown-mode with-editor zenburn-theme helm-core helm evil dracula-theme transient moe-theme apropospriate-theme modus-themes tao-theme posframe magit forge company window-purpose imenu-list sphinx-doc poetry nose lsp-pyright undo-tree smart-compile helm-fuzzy js2-refactor yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-cscope xcscope cython-mode company-anaconda blacken anaconda-mode pythonic web-beautify tide typescript-mode tern prettier-js nodejs-repl livid-mode skewer-mode multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path opencl-mode glsl-mode cuda-mode company-glsl dap-mode bui tree-mode smartparens seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake popwin minitest helm-gtags ggtags evil-matchit enh-ruby-mode counsel-gtags counsel swiper ivy chruby bundler inf-ruby chocolate-theme yasnippet-snippets which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep lsp-ui lsp-treemacs helm-xref helm-themes helm-swoop helm-rtags helm-projectile helm-mode-manager helm-make helm-lsp helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-c-style fuzzy flycheck-package evil-mc elisp-slime-nav dotenv-mode disaster diminish cquery cpp-auto-include company-statistics company-rtags company-lsp company-c-headers clang-format ccls auto-yasnippet auto-compile ace-jump-helm-line ac-ispell))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(standard-indent 4)
  '(vc-annotate-background "#201D0E")
@@ -648,7 +651,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 )
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
@@ -705,7 +708,7 @@ This function is called at the very end of Spacemacs initialization."
 ;; delete shell newline: https://emacs.stackexchange.com/questions/21901/why-is-there-a-newline-in-the-result-of-shell-command-to-string
 ;; init.el config
 
-(defun alter|font()
+(defun alter|font|MicroHei()
   (interactive)
   (if (eq system-type 'gnu/linux)
       (progn
@@ -718,3 +721,31 @@ This function is called at the very end of Spacemacs initialization."
           (set-fontset-font (frame-parameter nil 'font)
                             charset
                             (font-spec :family "WenQuanYi Micro Hei Mono" :size 26))))))
+(defun alter|font|Sarasa()
+  (interactive)
+  (if (eq system-type 'gnu/linux)
+      (progn
+        ;; Setting English Font
+        ;; (set-face-attribute 'default nil :font "Lucida Mac 14")
+        (setq face-font-rescale-alist '(("STHeiti" . 1.2) ("STFangsong" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2)))
+        (set-face-attribute 'default nil :font "Monaco 14")
+        ;; Chinese Font
+        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font)
+                            charset
+                            ;;(font-spec :family "Sarasa Term Hc" :size 26))))))
+                            (font-spec :family "Sarasa Mono SC Nerd" :size 26))))))
+
+(defun alter|font|NotoSans()
+  (interactive)
+  (if (eq system-type 'gnu/linux)
+      (progn
+        ;; Setting English Font
+        ;; (set-face-attribute 'default nil :font "Lucida Mac 14")
+        (setq face-font-rescale-alist '(("STHeiti" . 1.2) ("STFangsong" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2)))
+        (set-face-attribute 'default nil :font "Monaco 14")
+        ;; Chinese Font
+        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font)
+                            charset
+                            (font-spec :family "Noto Sans Mono CJK SC" :size 26))))))

@@ -1,3 +1,11 @@
 # Configuration files backup
 
-Thanks to [GitBSLR]:https://github.com/Alcaro/GitBSLR
+# Theme
+
+https://github.com/vinceliuice/Sierra-gtk-theme
+https://github.com/vinceliuice/WhiteSur-gtk-theme
+https://github.com/keeferrourke/capitaine-cursors
+
+# IDE Theme
+
+Clion: Hiberbee Theme
